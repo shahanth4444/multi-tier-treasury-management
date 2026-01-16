@@ -1,13 +1,13 @@
-# 🏛️ CryptoVentures DAO - Decentralized Investment Fund Governance System
+# CryptoVentures DAO - Governance System
 
 [![Solidity](https://img.shields.io/badge/Solidity-0.8.20-blue)](https://soliditylang.org/)
 [![Hardhat](https://img.shields.io/badge/Hardhat-Latest-yellow)](https://hardhat.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/Tests-43%20Passing-brightgreen)](test/)
 
-> **Production-grade governance system for decentralized investment funds with multi-tier treasury management, quadratic voting, and timelock security.**
+A production-grade decentralized autonomous organization (DAO) governance system for managing investment fund treasury allocations through token-weighted voting, delegation, and timelock security.
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Features](#features)
@@ -17,56 +17,48 @@
 - [Testing](#testing)
 - [Deployment](#deployment)
 - [Usage Examples](#usage-examples)
+- [Design Decisions](#design-decisions)
 - [Security](#security)
-- [Gas Optimization](#gas-optimization)
 - [Project Structure](#project-structure)
 - [Submission](#submission)
 
+---
+
+## Overview
+
+This system implements governance for a decentralized investment fund where members stake ETH to gain voting power and collectively manage treasury allocations. The system prevents whale dominance through quadratic voting, enforces security delays via timelock, and manages three fund tiers with different risk profiles.
+
+**Core Capabilities**:
+- Quadratic voting (voting power = sqrt(stake)) to prevent whale dominance
+- Multi-tier treasury (High-Conviction 60%, Experimental 30%, Operational 10%)
+- Configurable timelock delays (7d/3d/1d) based on proposal risk
+- Complete delegation system with revocable proxy voting
+- Role-based access control for security
 
 ---
 
-## 🎯 Overview
+## Features
 
-CryptoVentures DAO is a comprehensive governance system that enables token holders to collectively manage treasury allocations and investment decisions. The system implements advanced governance patterns used by major DAOs like Compound, Aave, and MakerDAO.
+### Governance
+- Quadratic voting: `votingPower = sqrt(stake)`
+- Delegation with revocable proxy voting
+- Complete proposal lifecycle state machine
+- Multi-tier proposals (HIGH_CONVICTION, EXPERIMENTAL, OPERATIONAL)
+- Minimum stake requirement (0.1 ETH) for spam prevention
 
-### Key Problems Solved
+### Treasury Management
+- **High-Conviction Fund** (60% cap): >10 ETH proposals, 66% approval, 7-day timelock
+- **Experimental Fund** (30% cap): 1-10 ETH proposals, 60% approval, 3-day timelock
+- **Operational Fund** (10% cap): <1 ETH proposals, 51% approval, 1-day timelock
+- Automatic fund type detection based on proposal amount
+- Real-time balance tracking and allocation caps
 
-✅ **Decision Bottlenecks** - Automated proposal lifecycle with configurable voting periods  
-✅ **Whale Dominance** - Quadratic voting prevents large holders from controlling decisions  
-✅ **Execution Risks** - Timelock mechanism provides security buffer before execution  
-✅ **Fund Mismanagement** - Multi-tier treasury with different approval thresholds  
-✅ **Lack of Transparency** - Comprehensive event emission for all governance actions  
-
----
-
-## ✨ Features
-
-### 🗳️ Governance
-
-- **Quadratic Voting**: Voting power = `sqrt(stake)` to reduce plutocracy
-- **Delegation System**: Proxy voting with revocable delegation
-- **Proposal Lifecycle**: Complete state machine (Pending → Active → Queued → Executed)
-- **Multi-Tier Proposals**: Different thresholds for different risk levels
-- **Spam Prevention**: Minimum stake requirement (0.1 ETH) to create proposals
-
-### 💰 Treasury Management
-
-- **Three Fund Tiers**:
-  - **High-Conviction** (60% cap): Major investments > 10 ETH
-  - **Experimental** (30% cap): Medium-risk bets 1-10 ETH
-  - **Operational** (10% cap): Day-to-day expenses < 1 ETH
-- **Automatic Fund Allocation**: Based on proposal amount
-- **Balance Tracking**: Real-time fund balance monitoring
-
-### 🔒 Security
-
-- **Timelock Controller**: Configurable delays before execution
-  - High-Conviction: 7 days
-  - Experimental: 3 days
-  - Operational: 1 day
-- **Guardian Role**: Emergency cancellation capability
-- **Re-entrancy Protection**: All external calls protected
-- **Role-Based Access Control**: Separation of powers (Proposer, Voter, Executor, Guardian)
+### Security
+- Timelock delays before execution (7d/3d/1d)
+- Guardian role for emergency cancellation
+- Re-entrancy protection on all external calls
+- Role-based access control (Proposer, Voter, Executor, Guardian)
+- Double execution prevention
 
 ---
 
@@ -1253,40 +1245,15 @@ After pushing to GitHub, verify:
 
 ---
 
-## 🤝 Contributing
+## License
 
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-## 📄 License
+## Contact
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- **OpenZeppelin**: Secure smart contract libraries
-- **Hardhat**: Development environment
-- **Compound**: Governance pattern inspiration
-- **Aave**: Multi-tier treasury concepts
-
----
-
-## 📞 Support
-
-For questions and support:
-- 📧 Email: shahanthkarri@gmail.com
-- 💬 GitHub: [github.com/shahanth4444](https://github.com/shahanth4444)
-- 📖 Repository: [multi-tier-treasury-management](https://github.com/shahanth4444/multi-tier-treasury-management)
-
----
-
-**Built with ❤️ by [Shahanth](https://github.com/shahanth4444) for the DeFi ecosystem**
+**Author**: Shahanth  
+**Email**: shahanthkarri@gmail.com  
+**GitHub**: [github.com/shahanth4444](https://github.com/shahanth4444)  
+**Repository**: [multi-tier-treasury-management](https://github.com/shahanth4444/multi-tier-treasury-management)
