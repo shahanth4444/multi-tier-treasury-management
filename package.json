@@ -1,0 +1,44 @@
+{
+  "name": "cryptoventures-dao",
+  "version": "1.0.0",
+  "description": "Decentralized Investment Fund Governance System with Multi-Tier Treasury Management",
+  "main": "index.js",
+  "scripts": {
+    "test": "hardhat test",
+    "test:coverage": "hardhat coverage",
+    "test:gas": "REPORT_GAS=true hardhat test",
+    "compile": "hardhat compile",
+    "node": "hardhat node",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "deploy:sepolia": "hardhat run scripts/deploy.js --network sepolia",
+    "seed:local": "hardhat run scripts/seed.js --network localhost",
+    "clean": "hardhat clean"
+  },
+  "keywords": [
+    "dao",
+    "governance",
+    "defi",
+    "ethereum",
+    "solidity",
+    "hardhat",
+    "quadratic-voting",
+    "timelock",
+    "treasury-management"
+  ],
+  "author": "Shahanth (https://github.com/shahanth4444)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shahanth4444/multi-tier-treasury-management.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.19.0",
+    "hardhat-gas-reporter": "^1.0.9",
+    "solidity-coverage": "^0.8.5"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0",
+    "ethers": "^6.9.0"
+  }
+}
