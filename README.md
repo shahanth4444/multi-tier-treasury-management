@@ -2,7 +2,6 @@
 
 [![Solidity](https://img.shields.io/badge/Solidity-0.8.20-blue)](https://soliditylang.org/)
 [![Hardhat](https://img.shields.io/badge/Hardhat-Latest-yellow)](https://hardhat.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/Tests-43%20Passing-brightgreen)](test/)
 
 A production-grade decentralized autonomous organization (DAO) governance system for managing investment fund treasury allocations through token-weighted voting, delegation, and timelock security.
@@ -1242,12 +1241,6 @@ After pushing to GitHub, verify:
    npx hardhat run scripts/deploy.js --network localhost
    # Expected: All contracts deployed ✅
    ```
-
----
-
-## License
-
-MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
