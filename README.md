@@ -1058,7 +1058,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 For questions and support:
-- 📧 Email: shahanth4444@gmail.com
+- 📧 Email: shahanthkarri@gmail.com
 - 💬 GitHub: [github.com/shahanth4444](https://github.com/shahanth4444)
 - 📖 Repository: [multi-tier-treasury-management](https://github.com/shahanth4444/multi-tier-treasury-management)
 
