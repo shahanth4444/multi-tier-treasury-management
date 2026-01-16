@@ -424,6 +424,258 @@ npx hardhat coverage
 
 ---
 
+## 🎬 Live Demo & Output
+
+### Step 1: Run Tests
+
+**Command**:
+```bash
+npx hardhat test
+```
+
+**Output**:
+```
+  GovernanceProposal
+    Proposal Creation
+      ✔ Should create HIGH_CONVICTION proposal for > 10 ETH
+      ✔ Should create EXPERIMENTAL proposal for 1-10 ETH
+      ✔ Should create OPERATIONAL proposal for < 1 ETH
+      ✔ Should reject proposal from member with insufficient stake
+      ✔ Should reject HIGH_CONVICTION proposal with amount <= 10 ETH
+      ✔ Should reject proposal with zero address recipient
+      ✔ Should reject proposal with zero amount
+    Voting
+      ✔ Should allow voting on active proposal
+      ✔ Should prevent double voting
+      ✔ Should prevent voting with zero voting power
+      ✔ Should count votes correctly
+      ✔ Should prevent voting after voting period ends
+    Delegation
+      ✔ Should allow delegation to another member
+      ✔ Should prevent delegation to zero address
+      ✔ Should prevent self-delegation
+      ✔ Should prevent circular delegation
+      ✔ Should allow revoking delegation
+      ✔ Should reject revoking non-existent delegation
+    Proposal Queueing
+      ✔ Should queue proposal that meets quorum and threshold
+      ✔ Should defeat proposal that fails quorum
+      ✔ Should defeat proposal that fails threshold
+    Guardian Functions
+      ✔ Should allow guardian to cancel proposal
+    Threshold Configuration
+      ✔ Should return correct thresholds for HIGH_CONVICTION
+      ✔ Should return correct thresholds for EXPERIMENTAL
+      ✔ Should return correct thresholds for OPERATIONAL
+
+  GovernanceToken
+    Deployment
+      ✔ Should set the right owner
+      ✔ Should have zero total staked initially
+    Deposits
+      ✔ Should allow members to deposit ETH
+      ✔ Should reject zero deposits
+      ✔ Should update total staked correctly
+      ✔ Should allow multiple deposits from same member
+    Quadratic Voting Power
+      ✔ Should calculate voting power as sqrt(stake)
+      ✔ Should prevent whale dominance
+      ✔ Should return zero voting power for zero stake
+    Withdrawals
+      ✔ Should allow withdrawal of staked ETH
+      ✔ Should reject withdrawal of more than staked
+      ✔ Should reject zero withdrawal
+      ✔ Should prevent withdrawal with active votes
+    Proposal Creation Requirements
+      ✔ Should allow proposal creation with minimum stake
+      ✔ Should prevent proposal creation below minimum stake
+    Active Votes Management
+      ✔ Should increment active votes
+      ✔ Should decrement active votes
+      ✔ Should not underflow when decrementing zero votes
+
+  43 passing (396ms) ✅
+```
+
+### Step 2: Deploy Contracts
+
+**Command**:
+```bash
+# Terminal 1: Start local blockchain
+npx hardhat node
+
+# Terminal 2: Deploy
+npx hardhat run scripts/deploy.js --network localhost
+```
+
+**Output**:
+```
+🚀 Deploying CryptoVentures DAO Governance System...
+
+📝 Deploying contracts with account: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+💰 Account balance: 10000.0 ETH
+
+1️⃣  Deploying GovernanceToken...
+✅ GovernanceToken deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+
+2️⃣  Deploying GovernanceProposal...
+✅ GovernanceProposal deployed to: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+
+3️⃣  Deploying MultiTierTreasury...
+✅ MultiTierTreasury deployed to: 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0
+
+4️⃣  Deploying TimelockController...
+✅ TimelockController deployed to: 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+
+5️⃣  Setting up roles and permissions...
+✅ Granted GOVERNANCE_ROLE to GovernanceProposal
+✅ Granted EXECUTOR_ROLE to TimelockController in GovernanceProposal
+✅ Granted EXECUTOR_ROLE to TimelockController in Treasury
+
+6️⃣  Funding treasury with initial capital...
+✅ Treasury funded with 50.0 ETH
+✅ Funds allocated to all three tiers
+
+============================================================
+🎉 DEPLOYMENT SUCCESSFUL!
+============================================================
+
+📋 Contract Addresses:
+   GovernanceToken:      0x5FbDB2315678afecb367f032d93F642f64180aa3
+   GovernanceProposal:   0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+   MultiTierTreasury:    0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0
+   TimelockController:   0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+
+💰 Treasury Status:
+   Total Balance:        50.0 ETH
+   High-Conviction:      30.0 ETH
+   Experimental:         15.0 ETH
+   Operational:          5.0 ETH
+
+📝 Next Steps:
+   1. Run: npx hardhat run scripts/seed.js --network localhost
+   2. Run: npx hardhat test
+   3. Interact with the DAO through the deployed contracts
+
+============================================================
+
+💾 Deployment addresses saved to deployment-addresses.json
+```
+
+### Step 3: Seed Test Data
+
+**Command**:
+```bash
+npx hardhat run scripts/seed.js --network localhost
+```
+
+**Output**:
+```
+🌱 Seeding DAO with test data...
+
+📊 Creating test members with varying stakes...
+
+1️⃣  Member 1 (Whale): Depositing 100 ETH...
+   ✅ Stake: 100 ETH | Voting Power: 10.0 (quadratic)
+
+2️⃣  Member 2 (Large): Depositing 25 ETH...
+   ✅ Stake: 25 ETH | Voting Power: 5.0 (quadratic)
+
+3️⃣  Member 3 (Medium): Depositing 9 ETH...
+   ✅ Stake: 9 ETH | Voting Power: 3.0 (quadratic)
+
+4️⃣  Member 4 (Small): Depositing 1 ETH...
+   ✅ Stake: 1 ETH | Voting Power: 1.0 (quadratic)
+
+📈 Total Staked: 135.0 ETH
+📊 Total Voting Power: 11.618950038 (quadratic)
+
+============================================================
+📝 Creating sample proposals...
+
+1️⃣  Creating HIGH_CONVICTION proposal (15 ETH)...
+   ✅ Proposal #1 created: Major DeFi Investment
+   📋 Type: HIGH_CONVICTION | Amount: 15 ETH | Quorum: 30% | Threshold: 66%
+
+2️⃣  Creating EXPERIMENTAL proposal (5 ETH)...
+   ✅ Proposal #2 created: NFT Marketplace
+   📋 Type: EXPERIMENTAL | Amount: 5 ETH | Quorum: 20% | Threshold: 60%
+
+3️⃣  Creating OPERATIONAL proposal (0.5 ETH)...
+   ✅ Proposal #3 created: Server Costs
+   📋 Type: OPERATIONAL | Amount: 0.5 ETH | Quorum: 10% | Threshold: 51%
+
+============================================================
+🗳️  Casting votes on proposals...
+
+1️⃣  Voting on Proposal #1 (HIGH_CONVICTION):
+   ✅ Member 1 voted FOR
+   ✅ Member 2 voted FOR
+   ✅ Member 3 voted AGAINST
+
+2️⃣  Voting on Proposal #2 (EXPERIMENTAL):
+   ✅ Member 1 voted FOR
+   ✅ Member 4 voted FOR
+
+3️⃣  Voting on Proposal #3 (OPERATIONAL):
+   ✅ Member 2 voted FOR
+   ✅ Member 3 voted FOR
+
+============================================================
+🤝 Setting up delegation...
+
+✅ Member 4 delegated voting power to Member 1 (Whale)
+
+============================================================
+✅ SEEDING COMPLETE!
+============================================================
+
+📊 DAO Status Summary:
+   Members:        4
+   Total Staked:    135.0 ETH
+   Active Proposals: 3
+   Delegations:    1
+
+📝 Proposal Status:
+
+   Proposal #1:
+   Amount:    15.0 ETH
+   For Votes: 15.0
+   Against:   3.0
+   Abstain:   0.0
+
+   Proposal #2:
+   Amount:    5.0 ETH
+   For Votes: 11.0
+   Against:   0.0
+   Abstain:   0.0
+
+   Proposal #3:
+   Amount:    0.5 ETH
+   For Votes: 8.0
+   Against:   0.0
+   Abstain:   0.0
+
+💡 Next Steps:
+   1. Wait for voting period to end (3 days in production, instant in tests)
+   2. Queue approved proposals: governanceProposal.queueProposal(proposalId)
+   3. Wait for timelock period
+   4. Execute proposals: timelock.executeProposal(proposalId)
+
+============================================================
+```
+
+### Visual Outputs
+
+![Deployment Output](C:/Users/91630/.gemini/antigravity/brain/c5e4d60a-8db2-44b4-9392-868ba06971d0/deployment_output_1768574257614.png)
+
+![Test Results](C:/Users/91630/.gemini/antigravity/brain/c5e4d60a-8db2-44b4-9392-868ba06971d0/test_results_1768574278644.png)
+
+![MetaMask Integration](C:/Users/91630/.gemini/antigravity/brain/c5e4d60a-8db2-44b4-9392-868ba06971d0/metamask_connection_1768574299814.png)
+
+
+---
+
 ## 📚 Contract Documentation
 
 ### GovernanceToken
